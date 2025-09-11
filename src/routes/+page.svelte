@@ -1,21 +1,17 @@
 <script>
   import List from "$lib/components/List/List.svelte";
   let { data } = $props();
-  console.log("Full data object:", data);
-  const { titles, descriptions, mugshot } = data;
-  console.log("titles:", titles);
-  console.log("descriptions:", descriptions);
-  console.log("mugshot:", mugshot);
-  console.log("Passing to List - mugshot:", mugshot);
+  const { titles, descriptions, mugshot, slugs } = data;
 </script>
 
-<div class="heading">
-  <h1>Little Alpine</h1>
-</div>
-
 <main>
-  <List items={titles} element="h2" />
-  <List items={descriptions} element="p" media={mugshot} />
+  <div class="heading">
+    <h1>Little Alpine</h1>
+  </div>
+  <div class="lists">
+    <List items={titles} {slugs} element="h2" />
+    <List items={descriptions} links={slugs} {mugshot} element="p" />
+  </div>
 </main>
 
 <style>
@@ -36,9 +32,31 @@
     opacity: 1;
     transform: translate(0, 0);
     /* We willen een delay van 50% van de duration */
-    animation: fade--slide-out var(--duration) calc(var(--duration) * .4)
+    animation: fade--slide-out var(--duration) calc(var(--duration) * 0.4)
       var(--easing--extreme-in) forwards;
   }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    overflow: clip;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .lists {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    height: fit-content;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Animations */
 
   @keyframes fade--slide-in {
     5% {
