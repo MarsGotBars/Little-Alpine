@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "Eurostile Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Eurostile Regular"), url("/fonts/eurostile.woff") format("woff");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+}
+
+body {
+  /* Easing */
+  --easing--extreme-out: cubic-bezier(0.5, 1, 0, 1);
+  --easing--extreme-in: cubic-bezier(1, 0, 0.5, 0);
+
+  /* Colors */
+  --color-background: #000;
+  --color-text-primary: #f5fbf9;
+  --line-color: #222222;
+
+  /* Global Typography */
+  --font-size-xl: clamp(3.375rem, 5vw, 8rem);
+  --font-size-lg: clamp(1.5rem, 3.75vw, 4.5rem);
+  --font-size-md: clamp(1.125rem, 3vw, 2.625rem);
+  --font-size-sm: clamp(1rem, 2vw, 2.25rem);
+
+  /* styling */
+  position: relative;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: "Eurostile Regular", "Times New Roman", Times, serif;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Typography */
+
+h1 {
+  font-size: 2.625rem;
+  line-height: 1.2;
+  letter-spacing: .05em;
+  font-family: "Eurostile Regular", "Times New Roman", Times, serif;
+}
+
+.xl-text {
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+}
+
+.lg-text {
+  font-size: var(--font-size-lg);
+  line-height: 1.2;
+}
+
+.md-text {
+  font-size: var(--font-size-md);
+  line-height: 1.2;
+}
+
