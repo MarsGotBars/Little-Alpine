@@ -4,13 +4,13 @@ import { processPersonData } from '$lib/utils/textUtil.js';
 export async function load() {
   try {
     const response = await fetchPersonData();
-    console.log("API Response:", response);
 
-    const { titles, descriptions, mugshot } = processPersonData(response.data);
+    const { titles, descriptions, slugs, mugshot } = processPersonData(response.data);
 
     return {
       titles,
       descriptions,
+      slugs,
       mugshot,
     };
   } catch (error) {
@@ -19,6 +19,7 @@ export async function load() {
     return {
       titles: [],
       descriptions: [],
+      slugs: [],
       mugshot: null
     };
   }
