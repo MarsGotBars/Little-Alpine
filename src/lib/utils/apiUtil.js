@@ -1,5 +1,5 @@
 /**
- * Fetches person data from the Directus API
+ * Fetch mijn data
  */
 export async function fetchPersonData() {
   const response = await fetch(
