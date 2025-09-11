@@ -2,7 +2,7 @@
 name: User story
 about: User story template
 title: 'User story:'
-labels: ''
+labels: Must have, User story
 assignees: MarsGotBars
 
 ---
