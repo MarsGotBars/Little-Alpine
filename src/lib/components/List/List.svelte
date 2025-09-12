@@ -223,7 +223,7 @@
     opacity: 0;
   }
 
-  .info:target {
+  :global(main:has(li:nth-of-type(3)[data-selected="true"]) li.info:nth-of-type(3)), .info:target {
     background: var(--color-background);
     display: inline-flex;
     animation: fade--slide-in 0.5s 0.15s var(--easing--extreme-out) forwards;
