@@ -21,7 +21,11 @@ body {
 
   /* Colors */
   --color-background: #000;
-  --color-text-primary: hsl(312, 20%, 95%);
+
+  /* Toegevoegd voor later; mogelijk de lightness beinvloeden op basis van geluid. */
+  --hue-primary: 312;
+  --lightness-primary: 95%;
+  --color-text-primary: hsl(var(--hue-primary), 20%, var(--lightness-primary));
   --line-color: #222222;
 
   /* Global Typography */
