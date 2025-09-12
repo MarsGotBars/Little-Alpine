@@ -21,7 +21,7 @@ body {
 
   /* Colors */
   --color-background: #000;
-  --color-text-primary: #f5fbf9;
+  --color-text-primary: hsl(320, 20%, 95%);
   --line-color: #222222;
 
   /* Global Typography */
