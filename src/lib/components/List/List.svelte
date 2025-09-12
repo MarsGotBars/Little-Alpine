@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import SettingsForm from "../SettingsForm.svelte";
 
   let { items, mugshot, slugs, links, element } = $props();
 
@@ -64,24 +65,33 @@
   }
 </script>
 
-<ul>
+<ul style={!links ? undefined : "--child-count: 6;"}>
   {#if !links}
-    <li class="info-link" data-selected={selectedIndex === 0}>
+    <li
+      class="info-link"
+      data-selected={selectedIndex === 0}
+      style="--index: 0;"
+    >
       <a href="#tracks" onclick={() => handleClick(0)}>
         <h2>Tracks</h2>
       </a>
     </li>
-    <li class="info-link" data-selected={selectedIndex === 1}>
+    <li
+      class="info-link"
+      data-selected={selectedIndex === 1}
+      style="--index: 1;"
+    >
       <a href="#settings" onclick={() => handleClick(1)}>
         <h2>Settings</h2>
       </a>
     </li>
   {:else}
-    <li class="info" id="tracks">
-      <svelte:element this={element}>Will place track stuff here</svelte:element>
+    <li class="info" id="tracks" style="--child-count: 6;">
+      <svelte:element this={element}>Will place track stuff here</svelte:element
+      >
     </li>
-    <li class="info" id="settings">
-      <svelte:element this={element}>Will place settings here</svelte:element>
+    <li class="info" id="settings" style="--child-count: 6;">
+      <SettingsForm />
     </li>
   {/if}
   {#each items as item, index}
@@ -90,6 +100,7 @@
       data-selected={links ? undefined : selectedIndex === adjustedIndex}
       class={links ? "info" : "info-link"}
       id={links && links[index]}
+      style="--index: {adjustedIndex};"
     >
       {#if item === "mugshot"}
         <img
@@ -111,7 +122,7 @@
           <svelte:element this={element}>{item}</svelte:element>
         </a>
       {:else}
-        <svelte:element this={element}>{item}</svelte:element>
+        <svelte:element this={element} class="xl-text">{item}</svelte:element>
       {/if}
     </li>
   {/each}
@@ -121,7 +132,7 @@
   ul {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.625rem;
     font-size: 1.75rem;
     width: 600px;
     max-width: 600px;
@@ -133,9 +144,23 @@
     align-items: center;
     width: 100%;
     grid-column: span 2;
+    opacity: 0;
+    animation: fade--slide-in 0.5s
+      calc(var(--loading-timer) + (0.15s * var(--child-count)))
+      var(--easing--extreme-out) forwards;
   }
 
-  li.info-link {
+  /* loading animation */
+
+  ul:nth-of-type(1) > li {
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: fade--slide-in 0.5s
+      calc(var(--loading-timer) + (0.15s * var(--index)))
+      var(--easing--extreme-out) forwards;
+  }
+
+  li.info-link a {
     background: var(--color-text-primary);
     color: var(--color-background);
   }
@@ -152,10 +177,14 @@
     justify-content: center;
     transition:
       width 0.2s var(--easing--extreme-in),
-      font-size 0.2s var(--easing--extreme-out);
+      font-size 0.2s var(--easing--extreme-out),
+      opacity 0.2s var(--easing--extreme-in);
   }
 
-  /* moeilijk deel... */
+  ul:nth-of-type(2) li:nth-of-type(2) {
+    align-self: end;
+  }
+
   li.info-link {
     width: clamp(94px, 10vw + 4rem, 400px);
     font-size: var(--font-size-sm);
@@ -170,14 +199,12 @@
     font-size: var(--font-size-lg);
   }
 
-  /* Style the item immediately before the selected one (using reverse logic) */
   li.info-link:has(+ li.info-link[data-selected="true"]),
   li.info-link[data-selected="true"] + li.info-link {
     width: clamp(94px, 20vw + 3rem, 500px);
     font-size: var(--font-size-md);
   }
 
-  /* Style the item immediately before the selected one (using reverse logic) */
   li.info-link:has(+ li.info-link[data-selected="true"]):hover,
   li.info-link[data-selected="true"] + li.info-link:hover {
     width: clamp(94px, 20vw + 4rem, 500px);
@@ -193,16 +220,25 @@
     display: none;
     color: var(--color-text-primary);
     height: 100%;
+    opacity: 0;
   }
 
   .info:target {
     background: var(--color-background);
     display: inline-flex;
+    animation: fade--slide-in 0.5s 0.15s var(--easing--extreme-out) forwards;
   }
 
   li img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+
+  @keyframes fade--slide-in {
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 </style>
