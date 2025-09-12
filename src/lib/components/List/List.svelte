@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import SettingsForm from "../SettingsForm.svelte";
+  import SettingsForm from "../Settings/SettingsForm.svelte";
 
   let { items, mugshot, slugs, links, element } = $props();
 
