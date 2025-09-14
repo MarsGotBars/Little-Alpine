@@ -4,32 +4,34 @@ form {
     flex-direction: column;
     align-items: flex-end;
     align-self: start;
+    width: 100%;
   }
 
   label.setting-box {
-    width: 400px;
+    max-width: 25rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    border: 5px solid var(--color-text-primary);
+    border: .3125rem solid var(--color-text-primary);
   }
 
   .setting-box span {
     font-size: var(--font-size-sm);
     background: var(--color-text-primary);
     color: var(--color-background);
-    padding: 0.625rem;
+    padding: .625rem;
     width: 100%;
     text-align: center;
   }
 
   .setting-box p {
     padding: 1.25rem;
-    padding-bottom: 0.625rem;
-    font-size: clamp(24px, 2vw, 36px);
+    padding-bottom: .625rem;
+    font-size: clamp(1.5rem, 2vw, 2.25rem);
   }
   .setting-box div {
     padding: 1.25rem;
-    padding-top: 0.625rem;
+    padding-top: .625rem;
   }
 
   .setting-box input {
@@ -40,7 +42,7 @@ form {
   .setting-box input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    height: 5px;
+    height: .3125rem;
     background: var(--color-text-primary);
     border-radius: 0;
     outline: none;
@@ -50,8 +52,8 @@ form {
   .setting-box input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 25px;
+    width: 0.9375rem;
+    height: 1.5625rem;
     background: var(--color-text-primary);
     border-radius: 0;
     cursor: pointer;
@@ -61,14 +63,14 @@ form {
   }
 
   .setting-box input[type="range"]:focus-visible {
-    outline: 5px dashed rgb(255, 255, 255);
+    outline: .3125rem dashed rgb(255, 255, 255);
     outline-offset: .625rem;
   }
 
   /* Firefox */
   .setting-box input[type="range"]::-moz-range-thumb {
-    width: 15px;
-    height: 25px;
+    width: .9375rem;
+    height: 1.5625rem;
     background: var(--color-text-primary);
     border-radius: 0;
     cursor: pointer;
@@ -76,11 +78,11 @@ form {
   }
 
   .setting-box input[type="range"]::-moz-range-thumb:is(:hover, :focus) {
-    outline: 2px solid var(--color-background);
+    outline: .125rem solid var(--color-background);
   }
 
   .setting-box input[type="range"]::-moz-range-track {
-    height: 5px;
+    height: 0.3125rem;
     background: var(--color-text-primary);
     border-radius: 0;
     border: none;

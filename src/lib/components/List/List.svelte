@@ -131,19 +131,18 @@
 <style>
   ul {
     display: flex;
-    flex-direction: column;
     gap: 0.625rem;
     font-size: 1.75rem;
-    width: 600px;
-    max-width: 600px;
+    width: 100%;
     align-items: flex-start;
+    overflow-y: scroll;
+    grid-column: 1 / -1;
   }
 
   ul:nth-of-type(2) {
     max-width: unset;
     align-items: center;
     width: 100%;
-    grid-column: span 2;
     opacity: 0;
     animation: fade--slide-in 0.5s
       calc(var(--loading-timer) + (0.15s * var(--child-count)))
@@ -186,28 +185,28 @@
   }
 
   li.info-link {
-    width: clamp(94px, 10vw + 4rem, 400px);
+    width: clamp(5.875rem, 10vw + 4rem, 25rem);
     font-size: var(--font-size-sm);
   }
 
   li.info-link:hover {
-    width: clamp(94px, 10vw + 5rem, 400px);
+    width: clamp(5.875rem, 10vw + 5rem, 25rem);
   }
 
   li.info-link[data-selected="true"] {
-    width: clamp(94px, 30vw + 2rem, 600px);
+    width: clamp(5.875rem, 30vw + 2rem, 37.5rem);
     font-size: var(--font-size-lg);
   }
 
   li.info-link:has(+ li.info-link[data-selected="true"]),
   li.info-link[data-selected="true"] + li.info-link {
-    width: clamp(94px, 20vw + 3rem, 500px);
+    width: clamp(5.875rem, 20vw + 3rem, 31.25rem);
     font-size: var(--font-size-md);
   }
 
   li.info-link:has(+ li.info-link[data-selected="true"]):hover,
   li.info-link[data-selected="true"] + li.info-link:hover {
-    width: clamp(94px, 20vw + 4rem, 500px);
+    width: clamp(5.875rem, 20vw + 4rem, 31.25rem);
     font-size: var(--font-size-md);
   }
 
@@ -216,14 +215,18 @@
     background: var(--color-text-primary);
     color: var(--color-background);
     text-align: center;
-    max-width: 420px;
+    max-width: 26.25rem;
+    width: 100%;
     display: none;
     color: var(--color-text-primary);
     height: 100%;
     opacity: 0;
   }
 
-  :global(main:has(li:nth-of-type(3)[data-selected="true"]) li.info:nth-of-type(3)), .info:target {
+  :global(
+      main:has(li:nth-of-type(3)[data-selected="true"]) li.info:nth-of-type(3)
+    ),
+  .info:target {
     background: var(--color-background);
     display: inline-flex;
     animation: fade--slide-in 0.5s 0.15s var(--easing--extreme-out) forwards;
@@ -233,6 +236,22 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+
+  @media (min-width: 56.25rem) {
+    ul {
+      overflow: unset;
+      max-width: 37.5rem;
+      width: fit-content;
+      flex-direction: column;
+    }
+
+    ul:nth-of-type(1) {
+      grid-column: 1;
+    }
+    ul:nth-of-type(2) {
+      grid-column: span 2;
+    }
   }
 
   @keyframes fade--slide-in {
