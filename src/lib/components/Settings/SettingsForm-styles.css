@@ -25,6 +25,7 @@ form {
   .setting-box p {
     padding: 1.25rem;
     padding-bottom: 0.625rem;
+    font-size: clamp(24px, 2vw, 36px);
   }
   .setting-box div {
     padding: 1.25rem;
@@ -55,6 +56,13 @@ form {
     border-radius: 0;
     cursor: pointer;
     border: none;
+    z-index: 1;
+    position: relative;
+  }
+
+  .setting-box input[type="range"]:focus-visible {
+    outline: 5px dashed rgb(255, 255, 255);
+    outline-offset: .625rem;
   }
 
   /* Firefox */
@@ -65,6 +73,10 @@ form {
     border-radius: 0;
     cursor: pointer;
     border: none;
+  }
+
+  .setting-box input[type="range"]::-moz-range-thumb:is(:hover, :focus) {
+    outline: 2px solid var(--color-background);
   }
 
   .setting-box input[type="range"]::-moz-range-track {
