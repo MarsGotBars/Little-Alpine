@@ -14,9 +14,9 @@
   // map slider (0-100) naar hue (0-300)
   let hslColor = $derived(`hsl(${(uiColorValue / 100) * 300}, 100%, 64%)`);
   
-  // Functie om de huidige kleur te bepalen, hue > 95 is wit
+  // Functie om de huidige kleur te bepalen, hue > 99 is wit
   function getCurrentColor(value) {
-    if (value >= 95) {
+    if (value >= 99) {
       return "white";
     }
     
@@ -37,7 +37,7 @@
     ];
     
     // vind de eerste range waar de hue kleiner is dan maxHue
-    return colorRanges.find(([maxHue]) => hue < maxHue)?.[1] || "red";
+    return colorRanges.find(([maxHue]) => hue < maxHue)?.[1] || "pink";
   }
 
   // Update currentColor en sla deze op in localStorage wanneer uiColorValue verandert
