@@ -1,14 +1,13 @@
 <script>
-  import TrackInfo from "./TrackInfo/TrackInfo.svelte";
-  import Equalizer from "./Equalizer/Equalizer.svelte";
+  import {TrackInfo, Equalizer} from "$lib";
   import "./MusicPlayer-styles.css";
-  const { tracks } = $props();
-  let customBars = null;
-
-  let bars = $state(customBars ?? 16)
+  const { tracks, volume } = $props();
+  let customBars = 32;
+  let bars = $state(customBars ?? 16);
+  let frequencyData = $state([]);
 </script>
 
 <aside class="music-player">
-  <TrackInfo {tracks} {bars} />
-  <Equalizer {bars}/>
+  <TrackInfo {tracks} {bars} {volume} bind:frequencyData />
+  <Equalizer {bars} {frequencyData} />
 </aside>
