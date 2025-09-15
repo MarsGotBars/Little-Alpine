@@ -15,7 +15,9 @@ export async function load() {
 
     // In production (Netlify), static files are moved to build root
     // In development, they're in the static folder
-    const audioPath = process.env.NODE_ENV === 'production' 
+    // Check for Netlify environment or if static directory doesn't exist
+    const isProduction = process.env.NODE_ENV === 'production' || !fs.existsSync('static');
+    const audioPath = isProduction
       ? path.join(process.cwd(), 'music')
       : path.join('static', 'music');
     
