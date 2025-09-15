@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import SettingsForm from "../Settings/SettingsForm.svelte";
+  import { SettingsForm } from "$lib";
 
-  let { items, mugshot, slugs, links, element } = $props();
+  let { items, mugshot, slugs, links, element, tracks, volume = $bindable() } = $props();
 
   // Track selection per item, only set default for non-navigation components
   let selectedIndex = $state(slugs ? null : 2);
@@ -22,12 +22,12 @@
           // Check in the dynamic slugs array
           const hashIndex = slugs.indexOf(target);
           if (hashIndex !== -1) {
-            selectedIndex = hashIndex + 2; // Offset by 2 for the hardcoded items
+            selectedIndex = hashIndex + 2; // Offset by 2 voor de hardcoded items
           }
         }
       } else {
         const nameIndex = items.indexOf("Name");
-        selectedIndex = nameIndex !== -1 ? nameIndex + 2 : 2; // Default to first dynamic item
+        selectedIndex = nameIndex !== -1 ? nameIndex + 2 : 2; // Default naar de eerste
       }
     }
   });
@@ -40,16 +40,16 @@
       const currentHash = window.location.hash;
       if (slugs && currentHash) {
         const target = currentHash.slice(1);
-        // Check for hardcoded items first
+        // Check voor hardcoded items eerst
         if (target === "tracks") {
           selectedIndex = 0;
         } else if (target === "settings") {
           selectedIndex = 1;
         } else {
-          // Check in the dynamic slugs array
+          // Check in de dynamic slugs array
           const hashIndex = slugs.indexOf(target);
           if (hashIndex !== -1) {
-            selectedIndex = hashIndex + 2; // Offset by 2 for the hardcoded items
+            selectedIndex = hashIndex + 2; // Offset by 2 voor de hardcoded items
           }
         }
       }
@@ -86,11 +86,14 @@
     </li>
   {:else}
     <li class="info" id="tracks" style="--child-count: 6;">
-      <svelte:element this={element}>Will place track stuff here</svelte:element
-      >
+        {#each tracks.name as track, index}
+          <button>
+            <h2>{track}</h2>
+          </button>
+        {/each}
     </li>
     <li class="info" id="settings" style="--child-count: 6;">
-      <SettingsForm />
+      <SettingsForm bind:volume />
     </li>
   {/if}
   {#each items as item, index}
@@ -149,8 +152,7 @@
       var(--easing--extreme-out) forwards;
   }
 
-  /* loading animation */
-
+  /* loading animatie */
   ul:nth-of-type(1) > li {
     opacity: 0;
     transform: translateX(-100%);
