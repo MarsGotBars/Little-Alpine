@@ -9,17 +9,20 @@
   font-size: clamp(2.625rem, 3vw, 4.5rem);
 }
 
-.equalizer{
-    --bar-columns: 16;
-    display: flex;
-    gap: clamp(.1rem, 1vw, .5rem);
-    justify-content: space-between;
-    align-items: end;
-    height: 100%;
+.equalizer {
+  --bar-columns: 16;
+  display: flex;
+  gap: clamp(0.1rem, 1vw, 0.5rem);
+  justify-content: space-between;
+  align-items: end;
+  height: 100%;
 }
 
-.bar{
-    height: .125rem;
-    width: 100%;
-    background: var(--color-text-primary);
+.bar {
+  --height: 2%;
+  min-height: 2px;
+  width: 100%;
+  background: var(--color-text-primary);
+  height: var(--height);
 }
+
