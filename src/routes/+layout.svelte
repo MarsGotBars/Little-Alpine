@@ -1,7 +1,5 @@
 <script>
-  import favicon from "$lib/assets/favicon.svg";
-  import Linescan from "$lib/components/Filters/Linescan.svelte";
-  import Frameshadow from "$lib/components/Filters/Frameshadow.svelte";
+  import { favicon, Linescan, Frameshadow } from "$lib";
 
   let { children } = $props();
 </script>

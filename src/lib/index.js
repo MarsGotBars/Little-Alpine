@@ -1,3 +1,6 @@
+// Assets
+export { default as favicon } from './assets/favicon.svg';
+
 // List component
 export { default as List } from './components/List/List.svelte';
 
