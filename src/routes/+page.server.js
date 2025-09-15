@@ -1,8 +1,6 @@
 import { fetchPersonData } from '$lib/utils/apiUtil.js';
 import { processPersonData } from '$lib/utils/textUtil.js';
 import { processTracks } from '$lib/utils/trackUtil.js';
-import fs from 'fs';
-import path from 'path';
 
 export async function load() {
   console.log('🚀 Starting data load...');
@@ -13,20 +11,16 @@ export async function load() {
 
     const { titles, descriptions, slugs, mugshot } = processPersonData(response.data);
 
-    // In production (Netlify), static files are moved to build root
-    // In development, they're in the static folder
-    // Check for Netlify environment or if static directory doesn't exist
-    const isProduction = process.env.NODE_ENV === 'production' || !fs.existsSync('static');
-    const audioPath = isProduction
-      ? path.join(process.cwd(), 'music')
-      : path.join('static', 'music');
+    // Static list of music files since serverless functions can't access static files
+    // Update this list when you add new music files
+    const audioFiles = [
+      'johnska-cascading_emotions.mp3',
+      'mastodon-blood_and_thunder.mp3'
+    ];
     
-    console.log('🎵 Looking for audio files at:', audioPath);
+    console.log('🎼 Using static audio files list:', audioFiles);
     console.log('🌍 Environment:', process.env.NODE_ENV);
     console.log('📁 Current working directory:', process.cwd());
-    
-    const audioFiles = fs.readdirSync(audioPath);
-    console.log('🎼 Found audio files:', audioFiles);
     
     const tracks = processTracks(audioFiles);
     console.log('✨ Processed tracks:', tracks);
