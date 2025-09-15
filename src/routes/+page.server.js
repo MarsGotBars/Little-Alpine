@@ -1,5 +1,6 @@
 import { fetchPersonData } from '$lib/utils/apiUtil.js';
 import { processPersonData } from '$lib/utils/textUtil.js';
+import { processTracks } from '$lib/utils/trackUtil.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -11,10 +12,9 @@ export async function load() {
 
     const audioPath = path.join('static', 'music');
     const audioFiles = fs.readdirSync(audioPath);
-    // console.log(audioFiles, 'audio');
     
-    const tracks = audioFiles.map(file => `music/${file}`);
-    // console.log(allAudio)
+    const tracks = processTracks(audioFiles);
+    
     return {
       titles,
       descriptions,
