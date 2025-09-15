@@ -14,5 +14,5 @@ export { default as SettingsForm } from './components/Settings/SettingsForm.svel
 export { default as ColorField } from './components/Settings/ColorField/ColorField.svelte';
 
 // Filter components
-export { default as Frameshadow } from './components/filters/Frameshadow.svelte';
-export { default as Linescan } from './components/filters/Linescan.svelte';
+export { default as Frameshadow } from './components/Effects/Frameshadow.svelte';
+export { default as Linescan } from './components/Effects/Linescan.svelte';
