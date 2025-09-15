@@ -2,7 +2,7 @@ form {
     gap: 0.625rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     align-self: start;
     width: 100%;
   }
@@ -86,4 +86,10 @@ form {
     background: var(--color-text-primary);
     border-radius: 0;
     border: none;
+  }
+
+  @media (min-width: 900px){
+    form{
+      align-items: flex-end;
+    }
   }

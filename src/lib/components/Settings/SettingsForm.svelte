@@ -1,5 +1,5 @@
 <script>
-  import ColorField from "./Fields/ColorField.svelte";
+  import ColorField from "./ColorField/ColorField.svelte";
   import "./SettingsForm-styles.css";
   let volume = $state(30);
 </script>
