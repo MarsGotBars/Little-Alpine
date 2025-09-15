@@ -24,8 +24,8 @@
       15deg,
       transparent 0px,
       transparent 2px,
-      rgba(0, 0, 0, 0.25) .375rem,
-      rgba(0, 0, 0, 0.25) .375rem,
+      rgba(0, 0, 0, 0.25) 0.375rem,
+      rgba(0, 0, 0, 0.25) 0.375rem,
       transparent 3px,
       transparent 4px
     );
