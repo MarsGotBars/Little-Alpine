@@ -1,16 +1,18 @@
 <script>
-	import favicon from '$lib/assets/favicon.svg';
-	import Linescan from '$lib/components/filters/Linescan.svelte';
-	import Frameshadow from '$lib/components/filters/Frameshadow.svelte';
+  import favicon from "$lib/assets/favicon.svg";
+  import Linescan from "$lib/components/Filters/Linescan.svelte";
+  import Frameshadow from "$lib/components/Filters/Frameshadow.svelte";
 
-	let { children } = $props();
+  let { children } = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+  <link rel="icon" href={favicon} />
 </svelte:head>
 
 <!-- <Linescan /> -->
 <!-- <Frameshadow /> -->
 
-{@render children?.()}
+<main>
+  {@render children?.()}
+</main>
