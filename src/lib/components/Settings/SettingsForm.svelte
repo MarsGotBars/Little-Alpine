@@ -1,12 +1,15 @@
 <script>
-  import ColorField from "./ColorField/ColorField.svelte";
+  import { ColorField } from "$lib";
   import "./SettingsForm-styles.css";
-  let volume = $state(30);
+  
+  let { volume = $bindable() } = $props();
+  
 </script>
 
 <form action="">
   <label class="setting-box">
     <span>Volume</span>
+    <p>{volume}%</p>
     <div>
       <input
         type="range"
@@ -14,7 +17,7 @@
         id="volume"
         min="0"
         max="100"
-        value="30"
+        bind:value={volume}
       />
     </div>
   </label>

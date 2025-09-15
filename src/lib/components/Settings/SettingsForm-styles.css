@@ -38,7 +38,6 @@ form {
     width: 100%;
   }
 
-  /* Range input styling */
   .setting-box input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -48,7 +47,6 @@ form {
     outline: none;
   }
 
-  /* Webkit browsers (Chrome, Safari, Edge) */
   .setting-box input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -67,7 +65,6 @@ form {
     outline-offset: .75rem;
   }
 
-  /* Firefox */
   .setting-box input[type="range"]::-moz-range-thumb {
     width: .9375rem;
     height: 1.5625rem;
