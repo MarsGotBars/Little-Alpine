@@ -1,5 +1,6 @@
 <script>
-  import { favicon, Linescan, Frameshadow } from "$lib";
+  import { favicon } from "$lib";
+  // import { Linescan, Frameshadow } from "$lib";
 
   let { children } = $props();
 </script>
