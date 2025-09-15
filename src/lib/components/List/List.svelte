@@ -61,7 +61,6 @@
 
   function handleClick(index) {
     selectedIndex = index;
-    console.log(`Selected index: ${selectedIndex}`);
   }
 </script>
 
@@ -135,13 +134,14 @@
     font-size: 1.75rem;
     width: 100%;
     align-items: flex-start;
-    overflow-y: scroll;
+    overflow-x: auto;
     grid-column: 1 / -1;
   }
 
   ul:nth-of-type(2) {
     max-width: unset;
     align-items: center;
+    justify-content: start;
     width: 100%;
     opacity: 0;
     animation: fade--slide-in 0.5s
@@ -173,7 +173,7 @@
   li {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     transition:
       width 0.2s var(--easing--extreme-in),
       font-size 0.2s var(--easing--extreme-out),
@@ -189,8 +189,16 @@
     font-size: var(--font-size-sm);
   }
 
-  li.info-link:hover {
+  li.info-link:is(:hover, :focus-within) {
     width: clamp(5.875rem, 10vw + 5rem, 25rem);
+  }
+  a {
+    isolation: isolate;
+  }
+  a:focus-visible {
+    outline: 2px solid var(--color-text-primary);
+    outline-offset: -3px;
+    box-shadow: 0 0 0 3px var(--color-background); /* adds a contrasting buffer */
   }
 
   li.info-link[data-selected="true"] {
@@ -204,8 +212,11 @@
     font-size: var(--font-size-md);
   }
 
-  li.info-link:has(+ li.info-link[data-selected="true"]):hover,
-  li.info-link[data-selected="true"] + li.info-link:hover {
+  li.info-link:has(+ li.info-link[data-selected="true"]):is(
+      :hover,
+      :focus-within
+    ),
+  li.info-link[data-selected="true"] + li.info-link:is(:hover, :focus-within) {
     width: clamp(5.875rem, 20vw + 4rem, 31.25rem);
     font-size: var(--font-size-md);
   }
@@ -250,7 +261,12 @@
       grid-column: 1;
     }
     ul:nth-of-type(2) {
+      justify-content: unset;
       grid-column: span 2;
+    }
+
+    li{
+      justify-content: center;
     }
   }
 
