@@ -10,7 +10,11 @@ export async function load() {
 
     const { titles, descriptions, slugs, mugshot } = processPersonData(response.data);
 
-    const audioPath = path.join('static', 'music');
+    // In production (Netlify), static files are moved to build root
+    // In development, they're in the static folder
+    const audioPath = process.env.NODE_ENV === 'production' 
+      ? path.join(process.cwd(), 'music')
+      : path.join('static', 'music');
     const audioFiles = fs.readdirSync(audioPath);
     
     const tracks = processTracks(audioFiles);
@@ -30,6 +34,7 @@ export async function load() {
       descriptions: [],
       slugs: [],
       mugshot: null,
+      tracks: { path: [], name: [] }
     };
   }
 }
