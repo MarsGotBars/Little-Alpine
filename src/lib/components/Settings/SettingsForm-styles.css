@@ -63,8 +63,8 @@ form {
   }
 
   .setting-box input[type="range"]:focus-visible {
-    outline: .3125rem dashed rgb(255, 255, 255);
-    outline-offset: .625rem;
+    outline: .25rem dashed var(--color-text-primary);
+    outline-offset: .75rem;
   }
 
   /* Firefox */

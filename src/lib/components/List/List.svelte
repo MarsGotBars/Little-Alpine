@@ -191,14 +191,12 @@
 
   li.info-link:is(:hover, :focus-within) {
     width: clamp(5.875rem, 10vw + 5rem, 25rem);
-  }
-  a {
     isolation: isolate;
   }
+
   a:focus-visible {
-    outline: 2px solid var(--color-text-primary);
-    outline-offset: -3px;
-    box-shadow: 0 0 0 3px var(--color-background); /* adds a contrasting buffer */
+    outline: .25rem dashed var(--color-background);
+    outline-offset: -.5rem;
   }
 
   li.info-link[data-selected="true"] {
