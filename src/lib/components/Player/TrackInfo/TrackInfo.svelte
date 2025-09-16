@@ -1,6 +1,12 @@
 <script>
   import { Controls } from "$lib";
-  let { tracks, bars, volume, frequencyData = $bindable(), selectedTrack } = $props();
+  let {
+    tracks,
+    bars,
+    volume,
+    frequencyData = $bindable(),
+    selectedTrack,
+  } = $props();
 
   // Basic variables we need
   let audioArray = $state([]);
@@ -13,7 +19,7 @@
   // Update volume van alle audio elementen wanneer de volume instelling verandert
   $effect(() => {
     if (volume !== undefined) {
-      audioArray.forEach((audio) => { 
+      audioArray.forEach((audio) => {
         if (audio) {
           audio.volume = volume / 100; // Convert 0-100 naar 0-1
         }
@@ -23,10 +29,21 @@
 
   // Handle selectedTrack veranderingen en play/pause control
   $effect(() => {
-    console.log('$effect triggered - index:', selectedTrack?.index, 'isPlaying:', selectedTrack?.isPlaying, 'audioArray.length:', audioArray.length);
-    if (selectedTrack?.index !== null && selectedTrack?.index !== undefined && audioArray[selectedTrack.index]) {
+    console.log(
+      "$effect triggered - index:",
+      selectedTrack?.index,
+      "isPlaying:",
+      selectedTrack?.isPlaying,
+      "audioArray.length:",
+      audioArray.length
+    );
+    if (
+      selectedTrack?.index !== null &&
+      selectedTrack?.index !== undefined &&
+      audioArray[selectedTrack.index]
+    ) {
       const currentAudio = audioArray[selectedTrack.index];
-      
+
       // Pauzeer alle andere tracks eerst
       audioArray.forEach((audio, index) => {
         if (audio && index !== selectedTrack.index && !audio.paused) {
@@ -36,7 +53,7 @@
 
       // Reset current track naar het begin alleen wanneer de track index verandert
       if (previousTrackIndex !== selectedTrack.index) {
-        console.log('Track changed, resetting currentTime');
+        console.log("Track changed, resetting currentTime");
         currentAudio.currentTime = 0;
         previousTrackIndex = selectedTrack.index;
       }
@@ -46,12 +63,15 @@
         if (!audioCtx) {
           setupAudio();
         }
-        
+
         // Zorg ervoor dat de audio context hervat wordt als nodig
-        if (audioCtx && audioCtx.state === 'suspended') {
-          audioCtx.resume().then(() => {
-            return currentAudio.play();
-          }).catch(console.error);
+        if (audioCtx && audioCtx.state === "suspended") {
+          audioCtx
+            .resume()
+            .then(() => {
+              return currentAudio.play();
+            })
+            .catch(console.error);
         } else {
           currentAudio.play().catch(console.error);
         }
@@ -82,7 +102,6 @@
         }
       }
     });
-
   }
 
   // Wanneer audio speelt, start met analyseren
@@ -117,7 +136,10 @@
   function handleTrackEnd() {
     if (selectedTrack?.index !== null && selectedTrack?.index !== undefined) {
       // Speel de volgende track af (met looping)
-      const nextIndex = selectedTrack.index >= tracks.path.length - 1 ? 0 : selectedTrack.index + 1;
+      const nextIndex =
+        selectedTrack.index >= tracks.path.length - 1
+          ? 0
+          : selectedTrack.index + 1;
       selectedTrack.index = nextIndex;
       selectedTrack.isPlaying = true;
     }
@@ -173,12 +195,12 @@
 </script>
 
 <div class="track-info">
-  <p>Current Track</p>
+  <p style="--index: 5">Current Track</p>
   <div class="track-title-container">
-  <h2 class="track-title">
-    {selectedTrack?.index !== null && selectedTrack?.index !== undefined 
-      ? tracks.name[selectedTrack.index] 
-        : 'No track selected'}
+    <h2 class="track-title" style="--index: 6">
+      {selectedTrack?.index !== null && selectedTrack?.index !== undefined
+        ? tracks.name[selectedTrack.index]
+        : "No track selected"}
     </h2>
     <Controls {tracks} bind:selectedTrack />
   </div>

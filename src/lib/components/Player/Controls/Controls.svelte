@@ -29,7 +29,7 @@
   }
 </script>
 
-<div class="controls">
+<div class="controls" style="--index: 8">
   <button
     class="ff-btn"
     onclick={handlePrevious}

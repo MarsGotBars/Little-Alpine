@@ -5,6 +5,30 @@
   gap: 1.25rem;
 }
 
+.track-info > *:not(.track-title-container) {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: fade--slide-in 0.5s calc(var(--loading-timer) + (0.15s * var(--index))) var(--easing--extreme-out) forwards;
+}
+
+.track-title-container > .track-title {
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: fade--slide-in 0.5s calc(var(--loading-timer) + (0.15s * var(--index))) var(--easing--extreme-out) forwards;
+}
+
+.track-title-container > .controls {
+  opacity: 0;
+  transform: translateX(-150%);
+  animation: fade--slide-in 0.5s calc(var(--loading-timer) + (0.15s * var(--index))) var(--easing--extreme-out) forwards;
+}
+
+.equalizer > * {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  animation: fade--slide-in 0.15s calc(var(--loading-timer) + (0.05s * var(--index))) var(--easing--extreme-out) forwards;
+}
+
 .track-info .track-title {
   font-size: clamp(2.625rem, 3vw, 4.5rem);
 }
@@ -88,6 +112,15 @@ svg {
   fill: var(--color-text-primary);
 }
 
+
+
 .hidden {
   height: 0;
+}
+
+@keyframes fade--slide-in {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

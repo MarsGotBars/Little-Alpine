@@ -49,6 +49,6 @@
 
 <div class="equalizer">
   {#each { length: bars } as _, index}
-    <div class="bar" id={index} style="--height: {getBarHeight(index)}%;"></div>
+    <div class="bar" id={index} style="--height: {getBarHeight(index)}%; --index: {index + 9}"></div>
   {/each}
 </div>

@@ -2,7 +2,7 @@
   /* Zetten we om de delay te bepalen op de h1 */
   --duration: 2s;
   opacity: 0;
-  animation: fade--slide-in var(--duration) var(--easing--extreme-out) forwards;
+  animation: fade--slide-in--heading var(--duration) var(--easing--extreme-out) forwards;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -15,7 +15,7 @@ h1 {
   opacity: 1;
   transform: translate(0, 0);
   /* We willen een delay van 50% van de duration */
-  animation: fade--slide-out var(--duration) calc(var(--duration) * 0.4)
+  animation: fade--slide-out--heading var(--duration) calc(var(--duration) * 0.4)
     var(--easing--extreme-in) forwards;
 }
 
@@ -31,7 +31,6 @@ main {
 }
 
 .lists {
-  --loading-timer: 3s;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.875rem;
@@ -50,7 +49,7 @@ main {
 
 /* Animations */
 
-@keyframes fade--slide-in {
+@keyframes fade--slide-in--heading {
   5% {
     opacity: 0;
   }
@@ -60,7 +59,7 @@ main {
   }
 }
 
-@keyframes fade--slide-out {
+@keyframes fade--slide-out--heading {
   85% {
     opacity: 0;
   }

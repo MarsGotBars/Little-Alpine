@@ -16,6 +16,9 @@
 }
 
 body {
+  /* Loading timer */
+  --loading-timer: 3s;
+
   /* Easing */
   --easing--extreme-out: cubic-bezier(0.5, 1, 0, 1);
   --easing--extreme-in: cubic-bezier(1, 0, 0.5, 0);
