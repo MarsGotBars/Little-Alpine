@@ -22,5 +22,5 @@
     </div>
   </label>
   <ColorField />
-  <label>Autoplay <input type="checkbox" name="" id="" /></label>
+  <label>Pause on loss of focus<input type="checkbox" name="" id="" /></label>
 </form>
