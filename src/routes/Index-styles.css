@@ -8,6 +8,7 @@
   left: 50%;
   transform: translate(-250%, -50%);
   z-index: 100;
+  pointer-events: none;
 }
 
 h1 {
@@ -63,8 +64,12 @@ main {
   85% {
     opacity: 0;
   }
-  to {
+  99% {
     opacity: 0;
     transform: translate(250%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
   }
 }
