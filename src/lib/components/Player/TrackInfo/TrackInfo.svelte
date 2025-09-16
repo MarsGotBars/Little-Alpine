@@ -1,4 +1,5 @@
 <script>
+  import { Controls } from "$lib";
   let { tracks, bars, volume, frequencyData = $bindable(), selectedTrack } = $props();
 
   // Basic variables we need
@@ -7,6 +8,7 @@
   let analyser, dataArray, source;
   let isAnalyzing = $state(false);
   let animationId;
+  let previousTrackIndex = $state(null);
 
   // Update volume van alle audio elementen wanneer de volume instelling verandert
   $effect(() => {
@@ -19,21 +21,40 @@
     }
   });
 
-  // Handle selectedTrack changes and play/pause control
+  // Handle selectedTrack veranderingen en play/pause control
   $effect(() => {
+    console.log('$effect triggered - index:', selectedTrack?.index, 'isPlaying:', selectedTrack?.isPlaying, 'audioArray.length:', audioArray.length);
     if (selectedTrack?.index !== null && selectedTrack?.index !== undefined && audioArray[selectedTrack.index]) {
       const currentAudio = audioArray[selectedTrack.index];
       
-      // Pause all other tracks first
+      // Pauzeer alle andere tracks eerst
       audioArray.forEach((audio, index) => {
         if (audio && index !== selectedTrack.index && !audio.paused) {
           audio.pause();
         }
       });
 
-      // Control the selected track based on isPlaying state
+      // Reset current track naar het begin alleen wanneer de track index verandert
+      if (previousTrackIndex !== selectedTrack.index) {
+        console.log('Track changed, resetting currentTime');
+        currentAudio.currentTime = 0;
+        previousTrackIndex = selectedTrack.index;
+      }
+
       if (selectedTrack.isPlaying && currentAudio.paused) {
-        currentAudio.play();
+        // Setup audio context als dit nog niet gedaan is
+        if (!audioCtx) {
+          setupAudio();
+        }
+        
+        // Zorg ervoor dat de audio context hervat wordt als nodig
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().then(() => {
+            return currentAudio.play();
+          }).catch(console.error);
+        } else {
+          currentAudio.play().catch(console.error);
+        }
       } else if (!selectedTrack.isPlaying && !currentAudio.paused) {
         currentAudio.pause();
       }
@@ -62,7 +83,6 @@
       }
     });
 
-    console.log("All audio elements connected to analyser");
   }
 
   // Wanneer audio speelt, start met analyseren
@@ -91,6 +111,16 @@
         startDecayAnimation();
       }
     }, 50); // Small delay to allow track switching
+  }
+
+  // Handle track ending - auto advance to next track
+  function handleTrackEnd() {
+    if (selectedTrack?.index !== null && selectedTrack?.index !== undefined) {
+      // Speel de volgende track af (met looping)
+      const nextIndex = selectedTrack.index >= tracks.path.length - 1 ? 0 : selectedTrack.index + 1;
+      selectedTrack.index = nextIndex;
+      selectedTrack.isPlaying = true;
+    }
   }
 
   // Smooth decay animatie voor bars wanneer audio stopt
@@ -144,18 +174,14 @@
 
 <div class="track-info">
   <p>Current Track</p>
+  <div class="track-title-container">
   <h2 class="track-title">
     {selectedTrack?.index !== null && selectedTrack?.index !== undefined 
       ? tracks.name[selectedTrack.index] 
-      : 'No track selected'}
-  </h2>
-
-  <div class="controls">
-    <span class="analysis-status">
-      Analysis: {isAnalyzing ? "🎵 Active" : "⏸️ Inactive"}
-    </span>
+        : 'No track selected'}
+    </h2>
+    <Controls {tracks} bind:selectedTrack />
   </div>
-
   {#each tracks.path as track, index}
     <audio
       src={track}
@@ -163,7 +189,7 @@
       controls
       onplay={handlePlay}
       onpause={handleStop}
-      onended={handleStop}
+      onended={handleTrackEnd}
       class:hidden={true}
     ></audio>
   {/each}
