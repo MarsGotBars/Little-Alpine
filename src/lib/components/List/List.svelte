@@ -10,6 +10,7 @@
     element,
     tracks,
     volume = $bindable(),
+    pauseOnBlur = $bindable(),
     selectedTrack = $bindable(),
   } = $props();
 
@@ -122,7 +123,7 @@
       </ul>
     </li>
     <li class="info" id="settings" style="--child-count: 6;">
-      <SettingsForm bind:volume />
+      <SettingsForm bind:volume bind:pauseOnBlur />
     </li>
   {/if}
   {#each items as item, index}
@@ -171,7 +172,6 @@
   }
 
   ul:nth-of-type(2) {
-    max-width: unset;
     align-items: center;
     justify-content: start;
     width: 100%;
@@ -212,6 +212,7 @@
   }
 
   ul:nth-of-type(2) li:nth-of-type(2) {
+    justify-self: end;
     align-self: end;
   }
 
@@ -226,8 +227,8 @@
   }
 
   a:focus-visible {
-    outline: 0.25rem dashed var(--color-background);
-    outline-offset: -0.5rem;
+    outline: 0.1875rem dashed var(--color-background);
+    outline-offset: -0.375rem;
   }
 
   li.info-link[data-selected="true"] {
@@ -263,6 +264,26 @@
     opacity: 0;
   }
 
+  .info#tracks {
+    max-width: none;
+    align-self: end;
+    align-items: start;
+    justify-content: end;
+  }
+
+  .info#tracks ul {
+    align-items: end;
+  }
+
+  .info#tracks li,
+  .info#tracks li button {
+    width: 100%;
+  }
+
+  .info#tracks li button:hover{
+    border-color: var(--color-background);
+  }
+
   :global(
       main:has(li:nth-of-type(3)[data-selected="true"]) li.info:nth-of-type(3)
     ),
@@ -278,6 +299,31 @@
     object-fit: cover;
   }
 
+  .track-list,
+  .track-list li,
+  .track-list button {
+    height: 100%;
+  }
+
+  .track-list li {
+    background: var(--color-text-primary);
+    padding: 0.3125rem;
+  }
+
+  .track-list button {
+    background: inherit;
+    color: var(--color-background);
+    padding: 0.3125rem;
+    border: 0.1875rem solid transparent;
+    cursor: pointer;
+  }
+
+  .track-list button:focus-visible {
+    outline: .1875rem dashed var(--color-background);
+    outline-offset: -0.1875rem;
+    border-color: transparent;
+  }
+
   @media (min-width: 56.25rem) {
     ul {
       overflow: unset;
@@ -289,7 +335,9 @@
     ul:nth-of-type(1) {
       grid-column: 1;
     }
+
     ul:nth-of-type(2) {
+      justify-self: end;
       justify-content: unset;
       grid-column: span 2;
     }
