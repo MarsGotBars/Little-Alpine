@@ -1,34 +1,55 @@
 <script>
-  let { tracks, bars, volume, frequencyData = $bindable() } = $props();
+  let { tracks, bars, volume, frequencyData = $bindable(), selectedTrack } = $props();
 
   // Basic variables we need
-  let currentTrack = $state(0);
   let audioArray = $state([]);
-  let audioCtx, analyser, dataArray, source;
+  let audioCtx = $state(null);
+  let analyser, dataArray, source;
   let isAnalyzing = $state(false);
   let animationId;
 
-  // Update volume of all audio elements when volume setting changes
+  // Update volume van alle audio elementen wanneer de volume instelling verandert
   $effect(() => {
     if (volume !== undefined) {
-      audioArray.forEach((audio) => {
+      audioArray.forEach((audio) => { 
         if (audio) {
-          audio.volume = volume / 100; // Convert 0-100 to 0-1
+          audio.volume = volume / 100; // Convert 0-100 naar 0-1
         }
       });
     }
   });
 
-  // Setup audio context and connect all elements once
+  // Handle selectedTrack changes and play/pause control
+  $effect(() => {
+    if (selectedTrack?.index !== null && selectedTrack?.index !== undefined && audioArray[selectedTrack.index]) {
+      const currentAudio = audioArray[selectedTrack.index];
+      
+      // Pause all other tracks first
+      audioArray.forEach((audio, index) => {
+        if (audio && index !== selectedTrack.index && !audio.paused) {
+          audio.pause();
+        }
+      });
+
+      // Control the selected track based on isPlaying state
+      if (selectedTrack.isPlaying && currentAudio.paused) {
+        currentAudio.play();
+      } else if (!selectedTrack.isPlaying && !currentAudio.paused) {
+        currentAudio.pause();
+      }
+    }
+  });
+
+  // Setup audio context en connect alle elementen eenmaal
   function setupAudio() {
     if (audioCtx) return; // Already setup
 
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = bars * 2;
+    analyser.fftSize = bars * 8;
     dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-    // Connect all audio elements to the same analyser
+    // Connect alle audio elementen naar dezelfde analyser
     audioArray.forEach((audioElement) => {
       if (audioElement) {
         try {
@@ -44,12 +65,12 @@
     console.log("All audio elements connected to analyser");
   }
 
-  // When audio plays, start analyzing
+  // Wanneer audio speelt, start met analyseren
   function handlePlay(e) {
-    // Setup audio connections on first play
+    // Setup audio connecties bij het eerste speelmoment
     setupAudio();
 
-    // Pause all other audio elements
+    // Pauzeer alle andere audio elementen
     audioArray.forEach((audio) => {
       if (audio && audio !== e.target && !audio.paused) {
         audio.pause();
@@ -59,41 +80,40 @@
     isAnalyzing = true;
   }
 
-  // When audio stops, stop analyzing (with small delay to allow track switching)
+  // Wanneer audio stopt, stop met analyseren (met een kleine vertraging om track switching toe te staan)
   function handleStop() {
     setTimeout(() => {
-      // Only stop if no audio is currently playing
+      // Alleen stoppen als er geen audio wordt afgespeeld
       const anyPlaying = audioArray.some((audio) => audio && !audio.paused);
       if (!anyPlaying) {
         isAnalyzing = false;
-        // Start the smooth decay animation
+        // Start de smooth decay animatie
         startDecayAnimation();
       }
     }, 50); // Small delay to allow track switching
   }
 
-  // Smooth decay animation for bars when audio stops
+  // Smooth decay animatie voor bars wanneer audio stopt
   function startDecayAnimation() {
     // 95% wordt behouden en 5% wordt verwijderd
-    const decayRate = 0.95;
+    const decayRate = 0.85;
 
     function decayStep() {
-      if (isAnalyzing) return; // Stop decay if audio starts again
+      if (isAnalyzing) return;
 
       let stillDecaying = false;
       const newData = frequencyData.map((value) => {
         const newValue = value * decayRate;
         if (newValue > 0.1) {
-          // Continue until very close to 0
           stillDecaying = true;
           return newValue;
         }
-        return 0; // Set to 0 when essentially zero
+        return 0;
       });
 
       frequencyData = newData;
 
-      // Continue decay if some bars are still decaying
+      // Continue decay als sommige bars nog vervallen
       if (stillDecaying) {
         requestAnimationFrame(decayStep);
       }
@@ -102,7 +122,7 @@
     requestAnimationFrame(decayStep);
   }
 
-  // Svelte reactive block - runs whenever isAnalyzing changes
+  // Svelte reactive block - run wanneer isAnalyzing verandert
   $effect(() => {
     if (!isAnalyzing || !analyser) return;
 
@@ -111,7 +131,7 @@
 
       analyser.getByteFrequencyData(dataArray);
 
-      const newFrequencyData = Array.from(dataArray.slice(0, bars));
+      const newFrequencyData = Array.from(dataArray);
 
       frequencyData = newFrequencyData;
 
@@ -124,7 +144,11 @@
 
 <div class="track-info">
   <p>Current Track</p>
-  <h2 class="track-title">{tracks.name[currentTrack]}</h2>
+  <h2 class="track-title">
+    {selectedTrack?.index !== null && selectedTrack?.index !== undefined 
+      ? tracks.name[selectedTrack.index] 
+      : 'No track selected'}
+  </h2>
 
   <div class="controls">
     <span class="analysis-status">
@@ -140,6 +164,7 @@
       onplay={handlePlay}
       onpause={handleStop}
       onended={handleStop}
+      class:hidden={true}
     ></audio>
   {/each}
 </div>

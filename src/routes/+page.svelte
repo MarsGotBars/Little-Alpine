@@ -6,9 +6,13 @@
   let { data } = $props();
   const { titles, descriptions, mugshot, slugs, tracks } = data;
 
+  
   // Globale volume state; die we vanuit de settings en de player kunnen gebruiken
   let volume = $state(30);
 
+  // Null zodat $effect niet de eerste track automatisch selecteert
+  let selectedTrack = $state({ index: null, isPlaying: false });
+    $inspect(selectedTrack, "selectedTrack");
   // Laad de volume vanuit localStorage als deze bestaat
   onMount(() => {
     const savedVolume = localStorage.getItem("volume");
@@ -38,7 +42,8 @@
     {tracks}
     element="p"
     bind:volume
+    bind:selectedTrack
   />
 </div>
-<!-- Dus sturen we de volume mee -->
-<MusicPlayer {tracks} {volume} />
+<!-- Dus sturen we het volume mee -->
+<MusicPlayer {tracks} {volume} {selectedTrack} />
