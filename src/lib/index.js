@@ -12,7 +12,6 @@ export { default as MusicPlayer } from './components/Player/MusicPlayer.svelte';
 export { default as TrackInfo } from './components/Player/TrackInfo/TrackInfo.svelte';
 export { default as Equalizer } from './components/Player/Equalizer/Equalizer.svelte';
 export { default as Controls } from './components/Player/Controls/Controls.svelte';
-export { default as Progress } from './components/Player/Progress/Progress.svelte';
 
 // Settings components
 export { default as SettingsForm } from './components/Settings/SettingsForm.svelte';
