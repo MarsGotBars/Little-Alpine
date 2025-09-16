@@ -10,5 +10,5 @@
 
 <aside class="music-player">
   <TrackInfo {tracks} {bars} {volume} {selectedTrack} bind:frequencyData />
-  <Equalizer {bars} {frequencyData} {volume} />
+  <Equalizer {bars} {frequencyData} />
 </aside>
