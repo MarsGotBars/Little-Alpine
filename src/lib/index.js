@@ -1,5 +1,8 @@
 // Assets
 export { default as favicon } from './assets/favicon.svg';
+export { default as Pause } from './assets/Pause.svelte';
+export { default as Play } from './assets/Play.svelte';
+export { default as Forward } from './assets/FF.svelte';
 
 // List component
 export { default as List } from './components/List/List.svelte';
@@ -8,6 +11,8 @@ export { default as List } from './components/List/List.svelte';
 export { default as MusicPlayer } from './components/Player/MusicPlayer.svelte';
 export { default as TrackInfo } from './components/Player/TrackInfo/TrackInfo.svelte';
 export { default as Equalizer } from './components/Player/Equalizer/Equalizer.svelte';
+export { default as Controls } from './components/Player/Controls/Controls.svelte';
+export { default as Progress } from './components/Player/Progress/Progress.svelte';
 
 // Settings components
 export { default as SettingsForm } from './components/Settings/SettingsForm.svelte';
