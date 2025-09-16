@@ -8,11 +8,11 @@ export async function load() {
 
     const { titles, descriptions, slugs, mugshot } = processPersonData(response.data);
 
-    // Static list of music files since serverless functions can't access static files
-    // Update this list when you add new music files
     const audioFiles = [
       'johnska-cascading_emotions.mp3',
-      'mastodon-blood_and_thunder.mp3'
+      'mastodon-blood_and_thunder.mp3',
+      'Last_Dinosaurs-Zoom.mp3',
+      'bullet_for_my_valentine-hand_of_blood.mp3',
     ];
     
     const tracks = processTracks(audioFiles);
