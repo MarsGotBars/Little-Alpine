@@ -2,7 +2,16 @@
   import { onMount } from "svelte";
   import { SettingsForm } from "$lib";
 
-  let { items, mugshot, slugs, links, element, tracks, volume = $bindable() } = $props();
+  let {
+    items,
+    mugshot,
+    slugs,
+    links,
+    element,
+    tracks,
+    volume = $bindable(),
+    selectedTrack = $bindable(),
+  } = $props();
 
   // Track selection per item, only set default for non-navigation components
   let selectedIndex = $state(slugs ? null : 2);
@@ -86,11 +95,31 @@
     </li>
   {:else}
     <li class="info" id="tracks" style="--child-count: 6;">
+      <ul class="track-list">
         {#each tracks.name as track, index}
-          <button>
-            <h2>{track}</h2>
-          </button>
+          <li>
+            <button
+              onclick={() => {
+                if (selectedTrack.index === index) {
+                  // Toggle play/pause for current track
+                  selectedTrack = {
+                    index,
+                    isPlaying: !selectedTrack.isPlaying,
+                  };
+                } else {
+                  // Select new track and start playing
+                  selectedTrack = { index, isPlaying: true };
+                }
+              }}
+              class:active={selectedTrack.index === index}
+              class:playing={selectedTrack.index === index &&
+                selectedTrack.isPlaying}
+            >
+              {track}
+            </button>
+          </li>
         {/each}
+      </ul>
     </li>
     <li class="info" id="settings" style="--child-count: 6;">
       <SettingsForm bind:volume />
@@ -121,7 +150,7 @@
         />
       {:else if slugs}
         <a href="#{slugs[index]}" onclick={() => handleClick(adjustedIndex)}>
-          <svelte:element this={element}>{item}</svelte:element>
+          {item}
         </a>
       {:else}
         <svelte:element this={element} class="xl-text">{item}</svelte:element>
@@ -153,7 +182,7 @@
   }
 
   /* loading animatie */
-  ul:nth-of-type(1) > li {
+  ul:nth-of-type(1):not(.track-list) > li {
     opacity: 0;
     transform: translateX(-100%);
     animation: fade--slide-in 0.5s
@@ -197,8 +226,8 @@
   }
 
   a:focus-visible {
-    outline: .25rem dashed var(--color-background);
-    outline-offset: -.5rem;
+    outline: 0.25rem dashed var(--color-background);
+    outline-offset: -0.5rem;
   }
 
   li.info-link[data-selected="true"] {
@@ -265,7 +294,7 @@
       grid-column: span 2;
     }
 
-    li{
+    li {
       justify-content: center;
     }
   }
