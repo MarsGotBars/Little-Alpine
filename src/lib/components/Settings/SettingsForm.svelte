@@ -1,9 +1,8 @@
 <script>
   import { ColorField } from "$lib";
   import "./SettingsForm-styles.css";
-  
-  let { volume = $bindable() } = $props();
-  
+
+  let { volume = $bindable(), pauseOnBlur = $bindable() } = $props();
 </script>
 
 <form action="">
@@ -22,5 +21,14 @@
     </div>
   </label>
   <ColorField />
-  <label>Pause on loss of focus<input type="checkbox" name="" id="" /></label>
+  <label for="pauseOnBlur">
+    Pause on loss of focus
+    <div class="custom-checkbox"></div>
+  </label>
+  <input
+    type="checkbox"
+    name="pauseOnBlur"
+    id="pauseOnBlur"
+    bind:checked={pauseOnBlur}
+  />
 </form>
