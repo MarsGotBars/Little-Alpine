@@ -24,9 +24,70 @@
   width: 100%;
   background: var(--color-text-primary);
   height: var(--height);
-  box-shadow: 0px -1rem 1px 1px color-mix(in srgb, var(--color-text-primary) 50%, black);
+  box-shadow: 0px -0.5rem 0px 1px color-mix(in srgb, var(--color-text-primary)
+        50%, black);
 }
 
-.hidden{
+.track-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.625rem;
+}
+
+.track-title {
+  width: 100%;
+}
+
+.controls button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-primary);
+}
+
+.controls,
+.play-btn,
+.pause-btn,
+.ff-btn {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.controls button:focus-visible {
+  outline: .1875rem dashed var(--color-text-primary);
+  outline-offset: .1875rem;
+}
+
+.ff-btn:first-of-type {
+  transform: rotate(180deg);
+}
+
+svg {
+  height: 2rem;
+  width: 2rem;
+}
+
+.play-btn svg path:first-of-type {
+  fill: var(--color-text-primary);
+}
+
+.play-btn svg path:last-of-type {
+  fill: var(--color-background);
+}
+
+.pause-btn svg rect:nth-of-type(-n + 2) {
+  fill: var(--color-text-primary);
+}
+
+.pause-btn svg rect:nth-last-of-type(-n + 2) {
+  fill: var(--color-background);
+}
+
+.ff-btn svg path {
+  fill: var(--color-text-primary);
+}
+
+.hidden {
   height: 0;
 }
