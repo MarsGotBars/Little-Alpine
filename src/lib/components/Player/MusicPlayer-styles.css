@@ -53,6 +53,7 @@
 }
 
 .track-title-container {
+  flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -116,6 +117,7 @@ svg {
 
 .hidden {
   height: 0;
+  position: absolute;
 }
 
 @keyframes fade--slide-in {
